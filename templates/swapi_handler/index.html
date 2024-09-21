@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Convert and Download CSV</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container mt-5">
+    <h1>Convert API Data to CSV</h1>
+    <form action="{% url 'swapi_handler:convert_and_download_csv' %}" method="POST">
+      {% csrf_token %}
+      <button type="submit">Convert and Download CSV</button>
+    </form>
+    <h2>Downloaded Datasets:</h2>
+    <table class="table table-striped">
+      <tr>
+        <th>Filename</th>
+        <th>Date Downloaded</th>
+        <th>Inspect Dataset</th>
+      </tr>
+      {% for dataset in datasets %}
+      <tr>
+        <td>{{ dataset.filename }}</td>
+        <td>{{ dataset.download_date }}</td>
+        <td><a href="{% url 'swapi_handler:dataset_details' dataset.id %}">Inspect</a></td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</body>
+</html>
